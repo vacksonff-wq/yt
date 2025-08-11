@@ -1,4 +1,3 @@
-
 const express = require("express");
 const cors = require("cors");
 const { exec } = require("child_process");
@@ -11,16 +10,18 @@ app.get("/", (req, res) => {
   res.send("YouTube Downloader API is running ✅");
 });
 
-// مسیر اصلی دانلود
 app.get("/download", (req, res) => {
   const videoUrl = req.query.url;
   if (!videoUrl) return res.status(400).json({ error: "URL is required" });
 
-  // اجرای yt-dlp برای گرفتن لینک مستقیم
   exec(`yt-dlp -f best -g "${videoUrl}"`, (err, stdout, stderr) => {
     if (err) {
-      console.error(stderr);
-      return res.status(500).json({ error: "Download failed" });
+      console.error("yt-dlp error:", stderr);
+      return res.status(500).json({ error: "yt-dlp execution failed", detail: stderr });
+    }
+    if (!stdout.trim()) {
+      console.error("No URL returned by yt-dlp:", stderr);
+      return res.status(500).json({ error: "No download URL extracted", detail: stderr });
     }
     res.json({ direct_url: stdout.trim() });
   });
