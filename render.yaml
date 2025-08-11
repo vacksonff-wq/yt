@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: yt-downloader
+    env: node
+    plan: free
+    buildCommand: apt-get update && apt-get install -y python3-pip ffmpeg && pip install yt-dlp && npm install
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 3000
