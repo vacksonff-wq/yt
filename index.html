@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>وب‌چت + تماس (WebRTC)</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <section class="card">
+      <header class="toolbar">
+        <div class="brand">وب‌چت + تماس</div>
+        <form id="roomForm" class="room-form">
+          <input id="roomInput" type="text" placeholder="نام روم (مثلاً: lobby)" />
+          <button type="submit">ورود</button>
+        </form>
+      </header>
+
+      <div id="status" class="status">منتظر انتخاب روم…</div>
+
+      <div class="content">
+        <ul id="messages" class="messages"></ul>
+        <aside class="users">
+          <div class="users-head">
+            <span>کاربران</span>
+            <button id="refreshUsers" title="بروزرسانی">↻</button>
+          </div>
+          <ul id="userList" class="user-list"></ul>
+        </aside>
+      </div>
+
+      <form id="chatForm" class="chat-form" autocomplete="off">
+        <input id="messageInput" type="text" placeholder="پیام خود را بنویسید…" disabled />
+        <button id="sendBtn" type="submit" disabled>ارسال</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- UI تماس دریافتی -->
+  <div id="incoming" class="incoming hidden">
+    <div class="incoming-card">
+      <div class="caller">تماس ورودی از <strong id="callerName">—</strong></div>
+      <div class="incoming-actions">
+        <button id="acceptBtn" class="accept">پاسخ</button>
+        <button id="declineBtn" class="decline">رد</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- کنترل‌های تماس -->
+  <div id="callBar" class="callbar hidden">
+    <div class="call-left">
+      <span id="callWith">—</span>
+    </div>
+    <div class="call-right">
+      <button id="endCallBtn" class="end">پایان</button>
+      <select id="outputSelect" class="output-select" title="انتخاب خروجی صدا"></select>
+    </div>
+  </div>
+
+  <!-- عناصر صوتی -->
+  <audio id="localAudio" autoplay muted></audio>
+  <audio id="remoteAudio" autoplay></audio>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

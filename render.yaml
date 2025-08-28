@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: chat-webrtc-fastapi
+    env: python
+    plan: free
+    region: oregon
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn mine:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11
+      - key: JWT_SECRET
+        generateValue: true
